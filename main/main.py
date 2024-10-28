@@ -173,10 +173,10 @@ def fight(fighter1_name, fighter2_name):
 
         # Verificamos si el personaje tiene un arma equipada
         if "equipamiento" not in fighter1:
-            print(f"{fighter1_name} no tiene un arma equipada y no puede atacar.")
+            print(f"{fighter1_name} no tiene un arma equipada y no puede atacar, por lo tanto huye del combate.")
             break
         if "equipamiento" not in fighter2:
-            print(f"{fighter2_name} no tiene un arma equipada y no puede atacar.")
+            print(f"{fighter2_name} no tiene un arma equipada y no puede atacar, por lo tanto huye del combate.")
             break
 
         # Ataque de fighter1 a fighter2
