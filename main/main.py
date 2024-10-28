@@ -1,3 +1,5 @@
+import random
+
 characters = {}
 
 personajes_disponibles = ["Aragorn", "Legolas", "Gimli", "Frodo", "Boromir", "Saruman", "Galadriel", "Sauron"]
@@ -42,7 +44,8 @@ def add_character():
         "raza": detalles_personajes[nombre]["raza"],
         "faccion": detalles_personajes[nombre]["faccion"],
         "ubicacion": detalles_personajes[nombre]["ubicacion"],
-        "relaciones": detalles_personajes[nombre]["relaciones"]
+        "relaciones": detalles_personajes[nombre]["relaciones"],
+        "hp": 300
     }
     print(f"Personaje {nombre} añadido.")
 
@@ -148,12 +151,154 @@ def show_characters_per_equipment(equipment):
             print(f"    - Nivel de confianza: {relaciones['nivel_confianza']}")
 
 
+
+
+def fight(fighter1_name, fighter2_name):
+    # Convertimos los nombres a diccionarios de personaje
+    fighter1 = characters.get(fighter1_name.capitalize())
+    fighter2 = characters.get(fighter2_name.capitalize())
+
+    # Verificamos que ambos personajes existen en el diccionario `characters`
+    if not fighter1 or not fighter2:
+        print("Uno o ambos personajes no existen.")
+        return
+
+    # Curamos a los personajes antes de la batalla
+    healing_before_battle(fighter1)
+    healing_before_battle(fighter2)
+
+    print(f"Empieza el combate entre {fighter1_name} y {fighter2_name}")
+    while fighter1["hp"] > 0 and fighter2["hp"] > 0:
+        print(f"Turno de {fighter1_name}")
+
+        # Verificamos si el personaje tiene un arma equipada
+        if "equipamiento" not in fighter1:
+            print(f"{fighter1_name} no tiene un arma equipada y no puede atacar.")
+            break
+        if "equipamiento" not in fighter2:
+            print(f"{fighter2_name} no tiene un arma equipada y no puede atacar.")
+            break
+
+        # Ataque de fighter1 a fighter2
+        if attack(check_prob(fighter1["equipamiento"]["nombre"])):
+            print(
+                f"El ataque ha acertado, {fighter1_name} ha causado {fighter1['equipamiento']['potencia']} puntos de daño.")
+            fighter2["hp"] -= fighter1["equipamiento"]["potencia"]
+        else:
+            print(f"El ataque de {fighter1_name} ha fallado, mala suerte!")
+
+        # Verificamos si fighter2 sigue vivo
+        if fighter2["hp"] <= 0:
+            print(f"{fighter2_name} ha perdido este combate")
+            break
+
+        print(f"Turno de {fighter2_name}")
+
+        # Ataque de fighter2 a fighter1
+        if attack(check_prob(fighter2["equipamiento"]["nombre"])):
+            print(
+                f"El ataque ha acertado, {fighter2_name} ha causado {fighter2['equipamiento']['potencia']} puntos de daño.")
+            fighter1["hp"] -= fighter2["equipamiento"]["potencia"]
+        else:
+            print(f"El ataque de {fighter2_name} ha fallado, mala suerte!")
+
+        # Verificamos si fighter1 sigue vivo
+        if fighter1["hp"] <= 0:
+            print(f"{fighter1_name} ha perdido este combate")
+            break
+
+def healing_before_battle(fighter):
+    # Restauramos la salud antes de la batalla
+    fighter["hp"] = 300
+
+def attack(chance):
+    return chance >= random.randint(1, 100)
+
+def check_prob(weapon_name):
+    # Determinamos la probabilidad de ataque en base al nombre del arma
+    attack_chance = 0
+    if "espada" in weapon_name.lower():
+        attack_chance = 50
+    elif "daga" in weapon_name.lower():
+        attack_chance = 40
+    elif "hacha" in weapon_name.lower():
+        attack_chance = 45
+    elif "arco" in weapon_name.lower():
+        attack_chance = 65
+    elif "baston" in weapon_name.lower():
+        attack_chance = 60
+    elif "anillo" in weapon_name.lower():
+        attack_chance = 70
+    return attack_chance
+
+
+
+def show_menu():
+        print("""\n----- Menu Juego Tierra Media -----
+        1. Registrar un nuevo personaje
+        2. Añadir equipamiento a un personaje
+        3. Equipar un arma a un personaje
+        4. Establecer relaciones entre personajes
+        5. Mover un personaje a una nueva localización
+        6. Simular una batalla entre dos personajes
+        7. Listar personajes por facción
+        8. Buscar personajes por equipamiento
+        9. Mostrar todos los personajes
+        10. Salir
+        -------------------------------------------------
+        Haga su eleccion \n""")
+
+
+
+
+
 def main():
-    add_character()
-    add_character()
-    add_character()
-    add_weapon_to_character()
-    show_characters()
+    continuar = True
+
+    while continuar:
+        opcion = 0
+        show_menu()
+        try:
+            while opcion <=0 or opcion >10:
+                print("Introduzca un número del 1 al 10")
+                opcion = int(input())
+        except ValueError:
+                print("Opcion no válida, introduzca un número")
+
+        match opcion:
+            case 1:
+                print("Has elegido la opción añadir personaje.")
+                add_character()
+            case 2:
+                print("Has elegido la opción añadir arma a un personaje.\n")
+                add_weapon_to_character()
+            case 3:
+                pass
+            case 4:
+                pass
+            case 5:
+                pass
+            case 6:
+                print("Has elegido la opción de combate entre dos personajes. ")
+                print("Aquí tienes una lista de todos los personajes: \n")
+                show_characters()
+                character1 = input("Introduce el personaje 1: ")
+                character2 = input("Introduce el personaje 2: ")
+                fight(character1, character2)
+            case 7:
+                print("Has elegido mostrar personajes por facción.")
+                faction = input("Introduce la facción que quieras buscar: ")
+                show_characters_per_faction()
+            case 8:
+                print("Has elegido mostrar personajes por equipamiento.\n")
+                equipment = input("Introduce el equipamiento que quieras buscar: ")
+                show_characters_per_equipment(equipment)
+            case 9:
+                print("Has elegido la opción de mostrar todos los personajes: \n")
+                show_characters()
+            case 10:
+                continuar = False
+                return print(f"Saliendo del programa...")
 
 
 if __name__ == "__main__":
