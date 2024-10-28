@@ -164,7 +164,7 @@ def main():
     add_character()
     show_characters()
     show_characters_per_faction("Mordor")
-    show_characters_per_equipment("Andúril")
+    show_characters_per_equipment("Arco de Galadriel")
 
 if __name__ == "__main__":
     main()
