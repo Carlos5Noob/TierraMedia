@@ -21,4 +21,4 @@ Motor de un videojuego de rol en el que dos personajes con armas disputan un com
 ### Desarrolladores del proyecto
 1. https://github.com/Carlos5Noob
 2. https://github.com/Alvarokstar
-3. https://github.com/JotanaGarLun
+3. https://github.com/JonatanGarLun
