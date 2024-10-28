@@ -85,6 +85,55 @@ def add_character():
                         }
         }
 
+def show_characters_per_faction(faction):
+    if not characters:
+         print(f"No hay ningún personaje en el sistema. ")
+         return
+
+    for nombre, detalles in characters.items():
+        if detalles["faccion"] == faction:
+            print(f"\nPersonaje: {nombre}")
+            print("  Raza:", detalles["raza"])
+            print("  Facción:", detalles["faccion"])
+            print("  Ubicación:", detalles["ubicacion"])
+
+            equipamiento = detalles["equipamiento"]
+            print("  Equipamiento:")
+            print(f"    - Nombre: {equipamiento['nombre']}")
+            print(f"    - Tipo: {equipamiento['tipo']}")
+            print(f"    - Potencia: {equipamiento['potencia']}")
+
+            relaciones = detalles["relaciones"]
+            print("  Relaciones:")
+            print(f"    - Personaje: {relaciones['personaje']}")
+            print(f"    - Tipo: {relaciones['tipo']}")
+            print(f"    - Nivel de confianza: {relaciones['nivel_confianza']}")
+
+def show_characters_per_equipment(equipment):
+    if not characters:
+         print(f"No hay ningún personaje en el sistema. ")
+         return
+
+    for nombre, detalles in characters.items():
+        if detalles["equipamiento"]["nombre"] == equipment:
+            print(f"\nPersonaje: {nombre}")
+            print("  Raza:", detalles["raza"])
+            print("  Facción:", detalles["faccion"])
+            print("  Ubicación:", detalles["ubicacion"])
+
+            equipamiento = detalles["equipamiento"]
+            print("  Equipamiento:")
+            print(f"    - Nombre: {equipamiento['nombre']}")
+            print(f"    - Tipo: {equipamiento['tipo']}")
+            print(f"    - Potencia: {equipamiento['potencia']}")
+
+            relaciones = detalles["relaciones"]
+            print("  Relaciones:")
+            print(f"    - Personaje: {relaciones['personaje']}")
+            print(f"    - Tipo: {relaciones['tipo']}")
+            print(f"    - Nivel de confianza: {relaciones['nivel_confianza']}")
+
+
 def show_characters():
 
     if not characters: 
@@ -114,6 +163,8 @@ def main():
     add_character()
     add_character()
     show_characters()
+    show_characters_per_faction("Mordor")
+    show_characters_per_equipment("Andúril")
 
 if __name__ == "__main__":
     main()
