@@ -30,6 +30,16 @@ type_weapon = {weapon[0]: 'Espada', weapon[1]: 'Arco', weapon[2]: 'Hacha', weapo
 weapon_power = {weapon[0]: 100, weapon[1]: 60, weapon[2]: 80, weapon[3]: 70, weapon[4]: 80, weapon[5]: 60,
                 weapon[6]: 50}
 
+locations = ("Rivendel", "Hobbiton", "Minas Tirith", "Mordor", "Isengard", "Bosque Negro", "Lothlórien")
+
+def change_location(ch_name):
+    character = characters.get(ch_name.capitalize())
+    print(f"La ubicación actual de este personaje es {character['ubicacion']}")
+    local = input(f"¿A qué ubicación desea cambiarlo?: ")
+    character["ubicacion"] = local
+    while character["ubicacion"].capitalize() not in locations:
+        input(f"{character['ubicacion']} es una región desconocida de este reino, inténtelo de nuevo")
+    return
 
 def add_character():
     nombre = input(
@@ -277,7 +287,12 @@ def main():
             case 4:
                 pass
             case 5:
-                pass
+                print("Has elegido la opción de modificar la localización de un personaje. ")
+                pj = input(f"Elige el personaje al cuál quiera cambiar su ubicación: ")
+                while pj not in characters:
+                    pj = input(f"El personaje seleccionado no se encuentra en estas tierras, seleccione otro guerrero. ")
+                change_location(pj)
+
             case 6:
                 print("Has elegido la opción de combate entre dos personajes. ")
                 print("Aquí tienes una lista de todos los personajes: \n")
