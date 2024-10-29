@@ -8,36 +8,36 @@ detalles_personajes = {
     "Aragorn": {"raza": "Humano",
                 "faccion": "La comunidad del anillo",
                 "ubicacion": "Rivendel",
-                "relaciones": {"personaje": "Legolas", "tipo": "Amigo", "nivel_confianza": 10}
+                "relaciones": [{"personaje": "Legolas", "tipo": "Amigo", "nivel_confianza": 10}]
                 },
     "Legolas": {"raza": "Elfo",
                 "faccion": "La comunidad del anillo",
                 "ubicacion": "Bosque Negro",
-                "relaciones": {"personaje": "Aragorn", "tipo": "Amigo", "nivel_confianza": 10}},
+                "relaciones":[ {"personaje": "Aragorn", "tipo": "Amigo", "nivel_confianza": 10}]},
     "Gimli": {"raza": "Enano",
               "faccion": "La comunidad del anillo",
               "ubicacion": "Rivendel",
-              "relaciones": {"personaje": "Aragorn", "tipo": "Amigo", "nivel_confianza": 9}},
+              "relaciones": [{"personaje": "Aragorn", "tipo": "Amigo", "nivel_confianza": 9}]},
     "Frodo": {"raza": "Hobbit",
               "faccion": "La comunidad del anillo",
               "ubicacion": "Hobbiton",
-              "relaciones": {"personaje": "Boromir", "tipo": "Neutral", "nivel_confianza": 5}},
+              "relaciones": [{"personaje": "Boromir", "tipo": "Neutral", "nivel_confianza": 5}]},
     "Boromir": {"raza": "Humano",
                 "faccion": "La comunidad del anillo",
                 "ubicacion": "Rivendel",
-                "relaciones": {"personaje": "Frodo", "tipo": "Neutral", "nivel_confianza": 5}},
+                "relaciones": [{"personaje": "Frodo", "tipo": "Neutral", "nivel_confianza": 5}]},
     "Saruman": {"raza": "Humano",
                 "faccion": "Isengard",
                 "ubicacion": "Isengard",
-                "relaciones": {"personaje": "Galadriel", "tipo": "Enemigo", "nivel_confianza": 2}},
+                "relaciones": [{"personaje": "Galadriel", "tipo": "Enemigo", "nivel_confianza": 2}]},
     "Galadriel": {"raza": "Elfo",
                   "faccion": "Lothlórien",
                   "ubicacion": "Bosque Negro",
-                  "relaciones": {"personaje": "Saruman", "tipo": "Enemigo", "nivel_confianza": 2}},
+                  "relaciones": [{"personaje": "Saruman", "tipo": "Enemigo", "nivel_confianza": 2}]},
     "Sauron": {"raza": "Humano",
                "faccion": "Mordor",
                "ubicacion": "Mordor",
-               "relaciones": {"personaje": "Aragorn", "tipo": "Enemigo", "nivel_confianza": 1}}
+               "relaciones": [{"personaje": "Aragorn", "tipo": "Enemigo", "nivel_confianza": 1}]}
 }
 
 
@@ -64,6 +64,22 @@ def change_location(ch_name):
     else:
         print(f"{ch_name} se dirige a {character['ubicacion']}")
     return
+
+
+def add_relationship(name):
+    nombre_relacion = input(f"Introduzca el nombre del personaje con el que va a tener relación con {name}").lower().capitalize()
+    while nombre_relacion not in personajes_disponibles:
+        nombre_relacion = input("El personaje seleccionado no existe. Inténtelo de nuevo: \n ")
+
+    tipo = input("Introduce el tipo de relación: ")
+    nivel_confianza = int(input("Introduce el nivel de confianza: "))
+
+    characters[name]["relaciones"].append( {
+        "personaje": nombre_relacion,
+        "tipo": tipo,
+        "nivel_confianza": nivel_confianza
+    })
+    print(f"Relación añadida correctamente entre {name} y {nombre_relacion}")
 
 def add_character():
     nombre = input(
@@ -127,11 +143,12 @@ def show_characters():
         else:
             print("  Equipamiento: Ninguno")
 
-        relaciones = detalles["relaciones"]
         print("  Relaciones:")
-        print(f"    - Personaje: {relaciones['personaje']}")
-        print(f"    - Tipo: {relaciones['tipo']}")
-        print(f"    - Nivel de confianza: {relaciones['nivel_confianza']}")
+        for relacion in detalles["relaciones"]:
+
+            print(f"\n    - Personaje: {relacion['personaje']}")
+            print(f"    - Tipo: {relacion['tipo']}")
+            print(f"    - Nivel de confianza: {relacion['nivel_confianza']}")
 
 def show_characters_per_faction(faction):
     if not characters:
@@ -154,11 +171,11 @@ def show_characters_per_faction(faction):
             else:
                 print("  Equipamiento: Ninguno")
 
-            relaciones = detalles["relaciones"]
             print("  Relaciones:")
-            print(f"    - Personaje: {relaciones['personaje']}")
-            print(f"    - Tipo: {relaciones['tipo']}")
-            print(f"    - Nivel de confianza: {relaciones['nivel_confianza']}")
+            for relacion in detalles["relaciones"]:
+                print(f"    - Personaje: {relacion['personaje']}")
+                print(f"    - Tipo: {relacion['tipo']}")
+                print(f"    - Nivel de confianza: {relacion['nivel_confianza']}")
 
 def show_characters_per_equipment(equipment):
     if not characters:
@@ -178,12 +195,11 @@ def show_characters_per_equipment(equipment):
             print(f"    - Tipo: {equipamiento['tipo']}")
             print(f"    - Potencia: {equipamiento['potencia']}")
 
-            relaciones = detalles["relaciones"]
             print("  Relaciones:")
-            print(f"    - Personaje: {relaciones['personaje']}")
-            print(f"    - Tipo: {relaciones['tipo']}")
-            print(f"    - Nivel de confianza: {relaciones['nivel_confianza']}")
-
+            for relacion in detalles["relaciones"]:
+                print(f"    - Personaje: {relacion['personaje']}")
+                print(f"    - Tipo: {relacion['tipo']}")
+                print(f"    - Nivel de confianza: {relacion['nivel_confianza']}")
 
 
 
@@ -259,14 +275,13 @@ def show_menu():
         print("""\n----- Menu Juego Tierra Media -----
         1. Registrar un nuevo personaje
         2. Añadir equipamiento a un personaje
-        3. Equipar un arma a un personaje
-        4. Establecer relaciones entre personajes
-        5. Mover un personaje a una nueva localización
-        6. Simular una batalla entre dos personajes
-        7. Listar personajes por facción
-        8. Buscar personajes por equipamiento
-        9. Mostrar todos los personajes
-        10. Salir
+        3. Establecer relaciones entre personajes
+        4. Mover un personaje a una nueva localización
+        5. Simular una batalla entre dos personajes
+        6. Listar personajes por facción
+        7. Buscar personajes por equipamiento
+        8. Mostrar todos los personajes
+        9. Salir
         -------------------------------------------------
         Haga su eleccion \n""")
 
@@ -281,8 +296,8 @@ def main():
         opcion = 0
         show_menu()
         try:
-            while opcion <=0 or opcion >10:
-                print("Introduzca un número del 1 al 10")
+            while opcion <=0 or opcion >9:
+                print("Introduzca un número del 1 al 9")
                 opcion = int(input())
         except ValueError:
                 print("Opcion no válida, introduzca un número")
@@ -295,34 +310,35 @@ def main():
                 print("Has elegido la opción añadir arma a un personaje.\n")
                 add_weapon_to_character()
             case 3:
-                pass
+                personaje = input("Introduce el nombre del personaje al que quieres añadir una nueva relación: ").lower().capitalize()
+                while personaje not in personajes_disponibles:
+                    personaje = input("Personaje no existe. Introduzca un personaje válido: ")
+                add_relationship(personaje)
             case 4:
-                pass
-            case 5:
                 print("Has elegido la opción de modificar la localización de un personaje. ")
                 pj = input(f"Elige el personaje al cuál quiera cambiar su ubicación: ")
                 while pj not in characters:
                     pj = input(f"El personaje seleccionado no se encuentra en estas tierras, seleccione otro guerrero. ")
                 change_location(pj)
-            case 6:
+            case 5:
                 print("Has elegido la opción de combate entre dos personajes. ")
                 print("Aquí tienes una lista de todos los personajes: \n")
                 show_characters()
                 character1 = input("Introduce el personaje 1: ")
                 character2 = input("Introduce el personaje 2: ")
                 fight(character1, character2)
-            case 7:
+            case 6:
                 print("Has elegido mostrar personajes por facción.")
                 faction = input("Introduce la facción que quieras buscar: ")
                 show_characters_per_faction(faction)
-            case 8:
+            case 7:
                 print("Has elegido mostrar personajes por equipamiento.\n")
                 equipment = input("Introduce el equipamiento que quieras buscar: ")
                 show_characters_per_equipment(equipment)
-            case 9:
+            case 8:
                 print("Has elegido la opción de mostrar todos los personajes: \n")
                 show_characters()
-            case 10:
+            case 9:
                 salir = False
                 return print(f"Saliendo del programa...")
 
