@@ -40,6 +40,7 @@ detalles_personajes = {
                "relaciones": {"personaje": "Aragorn", "tipo": "Enemigo", "nivel_confianza": 1}}
 }
 
+
 weapon = ["Espada Andúril", 'Arco de Galadriel', 'Hacha de Gimli', 'Daga de Frodo', 'Báculo de Saruman', 'Anillo Único',
           'Espada de Boromir']
 type_weapon = {weapon[0]: 'Espada', weapon[1]: 'Arco', weapon[2]: 'Hacha', weapon[3]: 'Daga', weapon[4]: 'Bastón',
