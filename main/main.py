@@ -5,21 +5,38 @@ characters = {}
 personajes_disponibles = ["Aragorn", "Legolas", "Gimli", "Frodo", "Boromir", "Saruman", "Galadriel", "Sauron"]
 
 detalles_personajes = {
-    "Aragorn": {"raza": "Humano", "faccion": "La comunidad del anillo", "ubicacion": "Rivendel",
-                "relaciones": {"personaje": "Legolas", "tipo": "Amigo", "nivel_confianza": 10}},
-    "Legolas": {"raza": "Elfo", "faccion": "La comunidad del anillo", "ubicacion": "Bosque Negro",
+    "Aragorn": {"raza": "Humano",
+                "faccion": "La comunidad del anillo",
+                "ubicacion": "Rivendel",
+                "relaciones": {"personaje": "Legolas", "tipo": "Amigo", "nivel_confianza": 10}
+                },
+    "Legolas": {"raza": "Elfo",
+                "faccion": "La comunidad del anillo",
+                "ubicacion": "Bosque Negro",
                 "relaciones": {"personaje": "Aragorn", "tipo": "Amigo", "nivel_confianza": 10}},
-    "Gimli": {"raza": "Enano", "faccion": "La comunidad del anillo", "ubicacion": "Rivendel",
+    "Gimli": {"raza": "Enano",
+              "faccion": "La comunidad del anillo",
+              "ubicacion": "Rivendel",
               "relaciones": {"personaje": "Aragorn", "tipo": "Amigo", "nivel_confianza": 9}},
-    "Frodo": {"raza": "Hobbit", "faccion": "La comunidad del anillo", "ubicacion": "Hobbiton",
+    "Frodo": {"raza": "Hobbit",
+              "faccion": "La comunidad del anillo",
+              "ubicacion": "Hobbiton",
               "relaciones": {"personaje": "Boromir", "tipo": "Neutral", "nivel_confianza": 5}},
-    "Boromir": {"raza": "Humano", "faccion": "La comunidad del anillo", "ubicacion": "Rivendel",
+    "Boromir": {"raza": "Humano",
+                "faccion": "La comunidad del anillo",
+                "ubicacion": "Rivendel",
                 "relaciones": {"personaje": "Frodo", "tipo": "Neutral", "nivel_confianza": 5}},
-    "Saruman": {"raza": "Humano", "faccion": "Isengard", "ubicacion": "Isengard",
+    "Saruman": {"raza": "Humano",
+                "faccion": "Isengard",
+                "ubicacion": "Isengard",
                 "relaciones": {"personaje": "Galadriel", "tipo": "Enemigo", "nivel_confianza": 2}},
-    "Galadriel": {"raza": "Elfo", "faccion": "Lothlórien", "ubicacion": "Bosque Negro",
+    "Galadriel": {"raza": "Elfo",
+                  "faccion": "Lothlórien",
+                  "ubicacion": "Bosque Negro",
                   "relaciones": {"personaje": "Saruman", "tipo": "Enemigo", "nivel_confianza": 2}},
-    "Sauron": {"raza": "Humano", "faccion": "Mordor", "ubicacion": "Mordor",
+    "Sauron": {"raza": "Humano",
+               "faccion": "Mordor",
+               "ubicacion": "Mordor",
                "relaciones": {"personaje": "Aragorn", "tipo": "Enemigo", "nivel_confianza": 1}}
 }
 
@@ -286,7 +303,6 @@ def main():
                 while pj not in characters:
                     pj = input(f"El personaje seleccionado no se encuentra en estas tierras, seleccione otro guerrero. ")
                 change_location(pj)
-
             case 6:
                 print("Has elegido la opción de combate entre dos personajes. ")
                 print("Aquí tienes una lista de todos los personajes: \n")
