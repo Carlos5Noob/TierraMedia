@@ -35,10 +35,16 @@ locations = ("Rivendel", "Hobbiton", "Minas Tirith", "Mordor", "Isengard", "Bosq
 def change_location(ch_name):
     character = characters.get(ch_name.capitalize())
     print(f"La ubicación actual de este personaje es {character['ubicacion']}")
+    aux = character["ubicacion"]
     local = input(f"¿A qué ubicación desea cambiarlo?: ")
     character["ubicacion"] = local
     while character["ubicacion"].capitalize() not in locations:
-        input(f"{character['ubicacion']} es una región desconocida de este reino, inténtelo de nuevo")
+       character["ubicacion"] = input(f"{character['ubicacion']} es una región desconocida de este reino, inténtelo de nuevo: \n")
+
+    if aux.lower() == character["ubicacion"].lower():
+        print(f"{ch_name} ya se encuentra en {aux}")
+    else:
+        print(f"{ch_name} se dirige a {character['ubicacion']}")
     return
 
 def add_character():
