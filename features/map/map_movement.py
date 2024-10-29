@@ -1,4 +1,4 @@
-from characters.characters import characters
+from features.characters.characters import characters
 
 different_locations = {}
 

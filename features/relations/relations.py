@@ -1,4 +1,4 @@
-from characters.characters import characters
+from features.characters.characters import characters
 
 personajes_disponibles = ["Aragorn", "Legolas", "Gimli", "Frodo", "Boromir", "Saruman", "Galadriel", "Sauron"]
 

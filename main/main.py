@@ -2,206 +2,131 @@ import random
 
 characters = {}
 
-personajes_disponibles = ["Aragorn", "Legolas", "Gimli", "Frodo", "Boromir", "Saruman", "Galadriel", "Sauron"]
+available_characters = ["Aragorn", "Legolas", "Gimli", "Frodo", "Boromir", "Saruman", "Galadriel", "Sauron"]
 
-detalles_personajes = {
-    "Aragorn": {"raza": "Humano",
-                "faccion": "La comunidad del anillo",
-                "ubicacion": "Rivendel",
-                "relaciones": [{"personaje": "Legolas", "tipo": "Amigo", "nivel_confianza": 10}]
-                },
-    "Legolas": {"raza": "Elfo",
-                "faccion": "La comunidad del anillo",
-                "ubicacion": "Bosque Negro",
-                "relaciones":[ {"personaje": "Aragorn", "tipo": "Amigo", "nivel_confianza": 10}]},
-    "Gimli": {"raza": "Enano",
-              "faccion": "La comunidad del anillo",
-              "ubicacion": "Rivendel",
-              "relaciones": [{"personaje": "Aragorn", "tipo": "Amigo", "nivel_confianza": 9}]},
-    "Frodo": {"raza": "Hobbit",
-              "faccion": "La comunidad del anillo",
-              "ubicacion": "Hobbiton",
-              "relaciones": [{"personaje": "Boromir", "tipo": "Neutral", "nivel_confianza": 5}]},
-    "Boromir": {"raza": "Humano",
-                "faccion": "La comunidad del anillo",
-                "ubicacion": "Rivendel",
-                "relaciones": [{"personaje": "Frodo", "tipo": "Neutral", "nivel_confianza": 5}]},
-    "Saruman": {"raza": "Humano",
-                "faccion": "Isengard",
-                "ubicacion": "Isengard",
-                "relaciones": [{"personaje": "Galadriel", "tipo": "Enemigo", "nivel_confianza": 2}]},
-    "Galadriel": {"raza": "Elfo",
-                  "faccion": "Lothlórien",
-                  "ubicacion": "Bosque Negro",
-                  "relaciones": [{"personaje": "Saruman", "tipo": "Enemigo", "nivel_confianza": 2}]},
-    "Sauron": {"raza": "Humano",
-               "faccion": "Mordor",
-               "ubicacion": "Mordor",
-               "relaciones": [{"personaje": "Aragorn", "tipo": "Enemigo", "nivel_confianza": 1}]}
+character_details = {
+    "Aragorn": {"race": "Human", "faction": "Fellowship", "location": "Rivendell",
+                "relationships": [{"character": "Legolas", "type": "Friend", "trust_level": 10}]},
+    "Legolas": {"race": "Elf", "faction": "Fellowship", "location": "Mirkwood", "relationships": []},
+    "Gimli": {"race": "Dwarf", "faction": "Fellowship", "location": "Moria", "relationships": []},
+    "Frodo": {"race": "Hobbit", "faction": "Fellowship", "location": "Shire", "relationships": []},
+    "Boromir": {"race": "Human", "faction": "Gondor", "location": "Minas Tirith", "relationships": []},
+    "Saruman": {"race": "Maiar", "faction": "Isengard", "location": "Isengard", "relationships": []},
+    "Galadriel": {"race": "Elf", "faction": "Lothlórien", "location": "Lothlórien", "relationships": []},
+    "Sauron": {"race": "Maiar", "faction": "Mordor", "location": "Mordor", "relationships": []},
 }
 
+weapons = ["Anduril Sword", "Galadriel's Bow", "Gimli's Axe", "Frodo's Dagger", "Saruman's Staff", "One Ring", "Boromir's Sword"]
+weapon_types = {weapons[0]: 'Sword', weapons[1]: 'Bow', weapons[2]: 'Axe', weapons[3]: 'Dagger', weapons[4]: 'Staff', weapons[5]: 'Ring', weapons[6]: 'Sword'}
+weapon_powers = {weapons[0]: 100, weapons[1]: 60, weapons[2]: 80, weapons[3]: 70, weapons[4]: 80, weapons[5]: 60, weapons[6]: 50}
 
-weapon = ["Espada Andúril", 'Arco de Galadriel', 'Hacha de Gimli', 'Daga de Frodo', 'Báculo de Saruman', 'Anillo Único',
-          'Espada de Boromir']
-type_weapon = {weapon[0]: 'Espada', weapon[1]: 'Arco', weapon[2]: 'Hacha', weapon[3]: 'Daga', weapon[4]: 'Bastón',
-               weapon[5]: 'Anillo', weapon[6]: 'Espada'}
-weapon_power = {weapon[0]: 100, weapon[1]: 60, weapon[2]: 80, weapon[3]: 70, weapon[4]: 80, weapon[5]: 60,
-                weapon[6]: 50}
+locations = ("Rivendell", "Shire", "Minas Tirith", "Mordor", "Isengard", "Mirkwood", "Lothlórien")
 
-locations = ("Rivendel", "Hobbiton", "Minas Tirith", "Mordor", "Isengard", "Bosque Negro", "Lothlórien")
+def change_location(name):
+    """
+    Cambia la ubicación de un personaje existente.
 
-def change_location(ch_name):
-    character = characters.get(ch_name.capitalize())
-    print(f"La ubicación actual de este personaje es {character['ubicacion']}")
-    aux = character["ubicacion"]
-    local = input(f"¿A qué ubicación desea cambiarlo?: ")
-    character["ubicacion"] = local
-    while character["ubicacion"].capitalize() not in locations:
-       character["ubicacion"] = input(f"{character['ubicacion']} es una región desconocida de este reino, inténtelo de nuevo: \n")
+    :param name: str, nombre del personaje
+    """
+    character = characters.get(name.capitalize())
+    if not character:
+        print(f"{name} no existe en el sistema.")
+        return
 
-    if aux.lower() == character["ubicacion"].lower():
-        print(f"{ch_name} ya se encuentra en {aux}")
+    print(f"Ubicación actual de {name}: {character['location']}")
+    new_location = input("Nueva ubicación: ").capitalize()
+    while new_location not in locations:
+        new_location = input(f"{new_location} no es válido. Introduzca otra ubicación: ").capitalize()
+
+    if new_location != character["location"]:
+        character["location"] = new_location
+        print(f"{name} ha sido trasladado a {new_location}")
     else:
-        print(f"{ch_name} se dirige a {character['ubicacion']}")
-    return
-
+        print(f"{name} ya se encuentra en {new_location}")
 
 def add_relationship(name):
-    nombre_relacion = input(f"Introduzca el nombre del personaje con el que va a tener relación con {name}").lower().capitalize()
-    while nombre_relacion not in personajes_disponibles:
-        nombre_relacion = input("El personaje seleccionado no existe. Inténtelo de nuevo: \n ")
+    """
+    Añade una relación entre dos personajes.
 
-    tipo = input("Introduce el tipo de relación: ")
-    nivel_confianza = int(input("Introduce el nivel de confianza: "))
+    :param name: str, nombre del personaje al que se añadirá la relación
+    """
+    related_name = input("Nombre del personaje con quien tendrá relación: ").capitalize()
+    if related_name not in available_characters:
+        print("Personaje no existe. Intente nuevamente.")
+        return
 
-    characters[name]["relaciones"].append( {
-        "personaje": nombre_relacion,
-        "tipo": tipo,
-        "nivel_confianza": nivel_confianza
+    relationship_type = input("Tipo de relación: ")
+    trust_level = int(input("Nivel de confianza: "))
+
+    characters[name]["relationships"].append({
+        "character": related_name,
+        "type": relationship_type,
+        "trust_level": trust_level
     })
-    print(f"Relación añadida correctamente entre {name} y {nombre_relacion}")
+    print(f"Relación añadida entre {name} y {related_name}")
 
 def add_character():
-    nombre = input(
-        "Introduce el nombre del personaje (Aragorn, Legolas, Gimli, Frodo, Boromir, Saruman, Galadriel, Sauron): ").capitalize()
-
-    if nombre not in personajes_disponibles:
-        print("El nombre introducido no es válido.")
+    """
+    Añade un nuevo personaje al sistema con detalles predefinidos.
+    """
+    name = input("Elija el nombre de un personaje de esta lista (Aragorn, Legolas, Gimli, Frodo, Boromir, Saruman, Galadriel, Sauron): ").lower().capitalize()
+    if name not in available_characters:
+        print("El nombre no es válido.")
         return
 
-
-    characters[nombre] = {
-        "raza": detalles_personajes[nombre]["raza"],
-        "faccion": detalles_personajes[nombre]["faccion"],
-        "ubicacion": detalles_personajes[nombre]["ubicacion"],
-        "relaciones": detalles_personajes[nombre]["relaciones"],
-        "hp": 300
-    }
-    print(f"Personaje {nombre} añadido.")
-
+    characters[name] = character_details[name]
+    characters[name]["hp"] = 300
+    print(f"Personaje {name} añadido.")
 
 def add_weapon_to_character():
-    personaje = input("Introduce un personaje al que quieras asignar un arma: ").capitalize()
-
-    if personaje not in characters:
-        print("El personaje seleccionado no existe.")
+    """
+    Asigna un arma a un personaje existente en el sistema.
+    """
+    name = input("Nombre del personaje: ").capitalize()
+    if name not in characters:
+        print("Personaje no existe.")
         return
 
-    arma = input(f"Introduce el arma que quieras añadir a {personaje}: ").strip()
-
-    if arma not in weapon:
-        print("El arma seleccionada no existe.")
+    weapon_name = input("Nombre del arma: ").strip()
+    if weapon_name not in weapons:
+        print("El arma no existe.")
         return
 
-
-    characters[personaje]["equipamiento"] = {
-        "nombre": arma,
-        "tipo": type_weapon[arma],
-        "potencia": weapon_power[arma]
+    characters[name]["equipment"] = {
+        "name": weapon_name,
+        "type": weapon_types[weapon_name],
+        "power": weapon_powers[weapon_name]
     }
-    print(f"Arma '{arma}' añadida correctamente al personaje {personaje}.")
-
+    print(f"Arma '{weapon_name}' asignada a {name}.")
 
 def show_characters():
+    """
+    Muestra todos los personajes en el sistema.
+    """
     if not characters:
-        print("No hay ningún personaje en el sistema.")
+        print("No hay personajes en el sistema.")
         return
 
-    for nombre, detalles in characters.items():
-        print(f"\nPersonaje: {nombre}")
-        print("  Raza:", detalles["raza"])
-        print("  Facción:", detalles["faccion"])
-        print("  Ubicación:", detalles["ubicacion"])
+    for name, details in characters.items():
+        print(f"\nPersonaje: {name}")
+        print("  Raza:", details["race"])
+        print("  Facción:", details["faction"])
+        print("  Ubicación:", details["location"])
 
-
-        if "equipamiento" in detalles:
-            equipamiento = detalles["equipamiento"]
+        if "equipment" in details:
+            equip = details["equipment"]
             print("  Equipamiento:")
-            print(f"    - Nombre: {equipamiento['nombre']}")
-            print(f"    - Tipo: {equipamiento['tipo']}")
-            print(f"    - Potencia: {equipamiento['potencia']}")
+            print(f"    - Nombre: {equip['name']}")
+            print(f"    - Tipo: {equip['type']}")
+            print(f"    - Potencia: {equip['power']}")
         else:
             print("  Equipamiento: Ninguno")
 
         print("  Relaciones:")
-        for relacion in detalles["relaciones"]:
-
-            print(f"\n    - Personaje: {relacion['personaje']}")
-            print(f"    - Tipo: {relacion['tipo']}")
-            print(f"    - Nivel de confianza: {relacion['nivel_confianza']}")
-
-def show_characters_per_faction(faction):
-    if not characters:
-        print(f"No hay ningún personaje en el sistema.")
-        return
-
-    for nombre, detalles in characters.items():
-        if detalles["faccion"] == faction:
-            print(f"\nPersonaje: {nombre}")
-            print("  Raza:", detalles["raza"])
-            print("  Facción:", detalles["faccion"])
-            print("  Ubicación:", detalles["ubicacion"])
-
-            if "equipamiento" in detalles:
-                equipamiento = detalles["equipamiento"]
-                print("  Equipamiento:")
-                print(f"    - Nombre: {equipamiento['nombre']}")
-                print(f"    - Tipo: {equipamiento['tipo']}")
-                print(f"    - Potencia: {equipamiento['potencia']}")
-            else:
-                print("  Equipamiento: Ninguno")
-
-            print("  Relaciones:")
-            for relacion in detalles["relaciones"]:
-                print(f"    - Personaje: {relacion['personaje']}")
-                print(f"    - Tipo: {relacion['tipo']}")
-                print(f"    - Nivel de confianza: {relacion['nivel_confianza']}")
-
-def show_characters_per_equipment(equipment):
-    if not characters:
-        print(f"No hay ningún personaje en el sistema.")
-        return
-
-    for nombre, detalles in characters.items():
-        if "equipamiento" in detalles and detalles["equipamiento"]["nombre"] == equipment:
-            print(f"\nPersonaje: {nombre}")
-            print("  Raza:", detalles["raza"])
-            print("  Facción:", detalles["faccion"])
-            print("  Ubicación:", detalles["ubicacion"])
-
-            equipamiento = detalles["equipamiento"]
-            print("  Equipamiento:")
-            print(f"    - Nombre: {equipamiento['nombre']}")
-            print(f"    - Tipo: {equipamiento['tipo']}")
-            print(f"    - Potencia: {equipamiento['potencia']}")
-
-            print("  Relaciones:")
-            for relacion in detalles["relaciones"]:
-                print(f"    - Personaje: {relacion['personaje']}")
-                print(f"    - Tipo: {relacion['tipo']}")
-                print(f"    - Nivel de confianza: {relacion['nivel_confianza']}")
-
-
+        for relation in details["relationships"]:
+            print(f"    - Personaje: {relation['character']}")
+            print(f"    - Tipo: {relation['type']}")
+            print(f"    - Nivel de confianza: {relation['trust_level']}")
 
 def fight(fighter1_name, fighter2_name):
     fighter1 = characters.get(fighter1_name.capitalize())
@@ -215,20 +140,21 @@ def fight(fighter1_name, fighter2_name):
     healing_before_battle(fighter2)
 
     print(f"Empieza el combate entre {fighter1_name} y {fighter2_name}")
+
     while fighter1["hp"] > 0 and fighter2["hp"] > 0:
         print(f"Turno de {fighter1_name}")
 
-        if "equipamiento" not in fighter1:
+        if "equipment" not in fighter1:
             print(f"{fighter1_name} no tiene un arma equipada y no puede atacar, por lo tanto huye del combate.")
             break
-        if "equipamiento" not in fighter2:
+        if "equipment" not in fighter2:
             print(f"{fighter2_name} no tiene un arma equipada y no puede atacar, por lo tanto huye del combate.")
             break
 
-        if attack(check_prob(fighter1["equipamiento"]["nombre"])):
+        if attack(check_prob(fighter1["equipment"]["name"])):
             print(
-                f"El ataque ha acertado, {fighter1_name} ha causado {fighter1['equipamiento']['potencia']} puntos de daño.")
-            fighter2["hp"] -= fighter1["equipamiento"]["potencia"]
+                f"El ataque ha acertado, {fighter1_name} ha causado {fighter1['equipment']['power']} puntos de daño.")
+            fighter2["hp"] -= fighter1["equipment"]["power"]
         else:
             print(f"El ataque de {fighter1_name} ha fallado, mala suerte!")
 
@@ -238,10 +164,10 @@ def fight(fighter1_name, fighter2_name):
 
         print(f"Turno de {fighter2_name}")
 
-        if attack(check_prob(fighter2["equipamiento"]["nombre"])):
+        if attack(check_prob(fighter2["equipment"]["name"])):
             print(
-                f"El ataque ha acertado, {fighter2_name} ha causado {fighter2['equipamiento']['potencia']} puntos de daño.")
-            fighter1["hp"] -= fighter2["equipamiento"]["potencia"]
+                f"El ataque ha acertado, {fighter2_name} ha causado {fighter2['equipment']['power']} puntos de daño.")
+            fighter1["hp"] -= fighter2["equipment"]["power"]
         else:
             print(f"El ataque de {fighter2_name} ha fallado, mala suerte!")
 
@@ -257,50 +183,104 @@ def attack(chance):
 
 def check_prob(weapon_name):
     attack_chance = 0
-    if "espada" in weapon_name.lower():
+    if "sword" in weapon_name.lower():
         attack_chance = 50
-    elif "daga" in weapon_name.lower():
+    if "dagger" in weapon_name.lower():
         attack_chance = 40
-    elif "hacha" in weapon_name.lower():
+    if "axe" in weapon_name.lower():
         attack_chance = 45
-    elif "arco" in weapon_name.lower():
+    if "bow" in weapon_name.lower():
         attack_chance = 65
-    elif "baston" in weapon_name.lower():
+    if "staff" in weapon_name.lower():
         attack_chance = 60
-    elif "anillo" in weapon_name.lower():
+    if "ring" in weapon_name.lower():
         attack_chance = 70
     return attack_chance
 
+
+def show_characters_per_faction(faction):
+    if not characters:
+        print(f"No hay ningún personaje en el sistema.")
+        return
+
+    for nombre, detalles in characters.items():
+        if detalles["faction"] == faction:
+            print(f"\nPersonaje: {nombre}")
+            print("  Raza:", detalles["race"])
+            print("  Facción:", detalles["faction"])
+            print("  Ubicación:", detalles["location"])
+
+            if "equipment" in detalles:
+                equipamiento = detalles["equipment"]
+                print("  Equipamiento:")
+                print(f"    - Nombre: {equipamiento['name']}")
+                print(f"    - Tipo: {equipamiento['type']}")
+                print(f"    - Potencia: {equipamiento['power']}")
+            else:
+                print("  Equipamiento: Ninguno")
+
+            print("  Relaciones:")
+            for relacion in detalles["relationships"]:
+                print(f"    - Personaje: {relacion['character']}")
+                print(f"    - Tipo: {relacion['type']}")
+                print(f"    - Nivel de confianza: {relacion['trust_level']}")
+
+def show_characters_per_equipment(equipment):
+    if not characters:
+        print(f"No hay ningún personaje en el sistema.")
+        return
+
+    for nombre, detalles in characters.items():
+        if "equipment" in detalles and detalles["equipment"]["name"] == equipment:
+            print(f"\nPersonaje: {nombre}")
+            print("  Raza:", detalles["race"])
+            print("  Facción:", detalles["faction"])
+            print("  Ubicación:", detalles["location"])
+
+            equipamiento = detalles["equipment"]
+            print("  Equipamiento:")
+            print(f"    - Nombre: {equipamiento['name']}")
+            print(f"    - Tipo: {equipamiento['type']}")
+            print(f"    - Potencia: {equipamiento['power']}")
+
+            print("  Relaciones:")
+            for relacion in detalles["relationships"]:
+                print(f"    - Personaje: {relacion['character']}")
+                print(f"    - Tipo: {relacion['type']}")
+                print(f"    - Nivel de confianza: {relacion['trust_level']}")
+
+
 def show_menu():
-        print("""\n----- Menu Juego Tierra Media -----
-        1. Registrar un nuevo personaje
-        2. Añadir equipamiento a un personaje
-        3. Establecer relaciones entre personajes
-        4. Mover un personaje a una nueva localización
-        5. Simular una batalla entre dos personajes
-        6. Listar personajes por facción
-        7. Buscar personajes por equipamiento
-        8. Mostrar todos los personajes
-        9. Salir
-        -------------------------------------------------
-        Haga su eleccion \n""")
-
-
-
-
-
+    """
+    Muestra el menú principal del juego.
+    """
+    print("""\n----- Menu Juego Tierra Media -----
+    1. Registrar un nuevo personaje
+    2. Añadir equipamiento a un personaje
+    3. Establecer relaciones entre personajes
+    4. Mover un personaje a una nueva localización
+    5. Simular una batalla entre dos personajes
+    6. Listar personajes por facción
+    7. Buscar personajes por equipamiento
+    8. Mostrar todos los personajes
+    9. Salir
+    -------------------------------------------------
+    Haga su eleccion \n""")
 def main():
+    """
+    Función principal del juego.
+    """
     salir = True
 
     while salir:
         opcion = 0
         show_menu()
         try:
-            while opcion <=0 or opcion >9:
+            while opcion <= 0 or opcion > 9:
                 print("Introduzca un número del 1 al 9")
                 opcion = int(input())
         except ValueError:
-                print("Opcion no válida, introduzca un número")
+            print("Opcion no válida, introduzca un número")
 
         match opcion:
             case 1:
@@ -310,15 +290,17 @@ def main():
                 print("Has elegido la opción añadir arma a un personaje.\n")
                 add_weapon_to_character()
             case 3:
-                personaje = input("Introduce el nombre del personaje al que quieres añadir una nueva relación: ").lower().capitalize()
-                while personaje not in personajes_disponibles:
+                personaje = input(
+                    "Introduce el nombre del personaje al que quieres añadir una nueva relación: ").lower().capitalize()
+                while personaje not in available_characters:
                     personaje = input("Personaje no existe. Introduzca un personaje válido: ")
                 add_relationship(personaje)
             case 4:
                 print("Has elegido la opción de modificar la localización de un personaje. ")
                 pj = input(f"Elige el personaje al cuál quiera cambiar su ubicación: ")
                 while pj not in characters:
-                    pj = input(f"El personaje seleccionado no se encuentra en estas tierras, seleccione otro guerrero. ")
+                    pj = input(
+                        f"El personaje seleccionado no se encuentra en estas tierras, seleccione otro guerrero. ")
                 change_location(pj)
             case 5:
                 print("Has elegido la opción de combate entre dos personajes. ")
@@ -341,7 +323,6 @@ def main():
             case 9:
                 salir = False
                 return print(f"Saliendo del programa...")
-
 
 if __name__ == "__main__":
     main()
