@@ -1,4 +1,3 @@
-from pyexpat.errors import messages
 
 weapons = {}
 

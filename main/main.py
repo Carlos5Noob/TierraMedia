@@ -164,16 +164,13 @@ def show_characters_per_equipment(equipment):
 
 
 def fight(fighter1_name, fighter2_name):
-    # Convertimos los nombres a diccionarios de personaje
     fighter1 = characters.get(fighter1_name.capitalize())
     fighter2 = characters.get(fighter2_name.capitalize())
 
-    # Verificamos que ambos personajes existen en el diccionario `characters`
     if not fighter1 or not fighter2:
         print("Uno o ambos personajes no existen.")
         return
 
-    # Curamos a los personajes antes de la batalla
     healing_before_battle(fighter1)
     healing_before_battle(fighter2)
 
@@ -181,7 +178,6 @@ def fight(fighter1_name, fighter2_name):
     while fighter1["hp"] > 0 and fighter2["hp"] > 0:
         print(f"Turno de {fighter1_name}")
 
-        # Verificamos si el personaje tiene un arma equipada
         if "equipamiento" not in fighter1:
             print(f"{fighter1_name} no tiene un arma equipada y no puede atacar, por lo tanto huye del combate.")
             break
@@ -189,7 +185,6 @@ def fight(fighter1_name, fighter2_name):
             print(f"{fighter2_name} no tiene un arma equipada y no puede atacar, por lo tanto huye del combate.")
             break
 
-        # Ataque de fighter1 a fighter2
         if attack(check_prob(fighter1["equipamiento"]["nombre"])):
             print(
                 f"El ataque ha acertado, {fighter1_name} ha causado {fighter1['equipamiento']['potencia']} puntos de daño.")
@@ -197,14 +192,12 @@ def fight(fighter1_name, fighter2_name):
         else:
             print(f"El ataque de {fighter1_name} ha fallado, mala suerte!")
 
-        # Verificamos si fighter2 sigue vivo
         if fighter2["hp"] <= 0:
             print(f"{fighter2_name} ha perdido este combate")
             break
 
         print(f"Turno de {fighter2_name}")
 
-        # Ataque de fighter2 a fighter1
         if attack(check_prob(fighter2["equipamiento"]["nombre"])):
             print(
                 f"El ataque ha acertado, {fighter2_name} ha causado {fighter2['equipamiento']['potencia']} puntos de daño.")
@@ -212,20 +205,17 @@ def fight(fighter1_name, fighter2_name):
         else:
             print(f"El ataque de {fighter2_name} ha fallado, mala suerte!")
 
-        # Verificamos si fighter1 sigue vivo
         if fighter1["hp"] <= 0:
             print(f"{fighter1_name} ha perdido este combate")
             break
 
 def healing_before_battle(fighter):
-    # Restauramos la salud antes de la batalla
     fighter["hp"] = 300
 
 def attack(chance):
     return chance >= random.randint(1, 100)
 
 def check_prob(weapon_name):
-    # Determinamos la probabilidad de ataque en base al nombre del arma
     attack_chance = 0
     if "espada" in weapon_name.lower():
         attack_chance = 50
@@ -240,8 +230,6 @@ def check_prob(weapon_name):
     elif "anillo" in weapon_name.lower():
         attack_chance = 70
     return attack_chance
-
-
 
 def show_menu():
         print("""\n----- Menu Juego Tierra Media -----
@@ -263,9 +251,9 @@ def show_menu():
 
 
 def main():
-    continuar = True
+    salir = True
 
-    while continuar:
+    while salir:
         opcion = 0
         show_menu()
         try:
@@ -303,7 +291,7 @@ def main():
             case 7:
                 print("Has elegido mostrar personajes por facción.")
                 faction = input("Introduce la facción que quieras buscar: ")
-                show_characters_per_faction()
+                show_characters_per_faction(faction)
             case 8:
                 print("Has elegido mostrar personajes por equipamiento.\n")
                 equipment = input("Introduce el equipamiento que quieras buscar: ")
@@ -312,7 +300,7 @@ def main():
                 print("Has elegido la opción de mostrar todos los personajes: \n")
                 show_characters()
             case 10:
-                continuar = False
+                salir = False
                 return print(f"Saliendo del programa...")
 
 
