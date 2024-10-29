@@ -33,7 +33,7 @@ Hemos introducido unos cuantos manejos de errores en el código, como por ejempl
 
 Partes del proyecto que hemos realizado cada uno: 
 - Carlos Chacón: Personajes, README.md y manejo de errores
-- Álvaro Fernández: Equipamiento y ubicaciones 
+- Álvaro Fernández: Equipamiento y ubicaciones y traducción
 - Jonatan García: Sistema de combates, menú, documentación y refactorización
 
 ### Desarrolladores del proyecto
