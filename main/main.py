@@ -129,6 +129,15 @@ def show_characters():
             print(f"    - Nivel de confianza: {relation['trust_level']}")
 
 def fight(fighter1_name, fighter2_name):
+
+    """
+    Inicia un combate entre dos personajes.
+
+    Args:
+        fighter1_name (str): Nombre del primer luchador.
+        fighter2_name (str): Nombre del segundo luchador.
+    """
+
     fighter1 = characters.get(fighter1_name.capitalize())
     fighter2 = characters.get(fighter2_name.capitalize())
 
@@ -176,12 +185,42 @@ def fight(fighter1_name, fighter2_name):
             break
 
 def healing_before_battle(fighter):
+
+    """
+    Restaura los puntos de salud del luchador a 300 antes de la batalla.
+
+    Args:
+        fighter (dict): Diccionario que contiene la información del luchador.
+    """
+
     fighter["hp"] = 300
 
 def attack(chance):
+
+    """
+    Determina si un ataque tiene éxito basado en la probabilidad dada.
+
+    Args:
+        chance (int): Porcentaje de probabilidad de que el ataque tenga éxito.
+
+    Returns:
+        bool: True si el ataque tiene éxito, False en caso contrario.
+    """
+
     return chance >= random.randint(1, 100)
 
 def check_prob(weapon_name):
+
+    """
+    Devuelve la probabilidad de éxito del ataque según el tipo de arma equipada.
+
+    Args:
+        weapon_name (str): Nombre del arma equipada.
+
+    Returns:
+        int: Probabilidad de éxito del ataque.
+    """
+
     attack_chance = 0
     if "sword" in weapon_name.lower():
         attack_chance = 50
@@ -199,6 +238,14 @@ def check_prob(weapon_name):
 
 
 def show_characters_per_faction(faction):
+
+    """
+    Muestra los personajes que pertenecen a una facción específica.
+
+    Args:
+        faction (str): Nombre de la facción para filtrar los personajes.
+    """
+
     if not characters:
         print(f"No hay ningún personaje en el sistema.")
         return
@@ -226,6 +273,14 @@ def show_characters_per_faction(faction):
                 print(f"    - Nivel de confianza: {relacion['trust_level']}")
 
 def show_characters_per_equipment(equipment):
+
+    """
+    Muestra los personajes que tienen un equipamiento específico.
+
+    Args:
+        equipment (str): Nombre del equipamiento para filtrar los personajes.
+    """
+
     if not characters:
         print(f"No hay ningún personaje en el sistema.")
         return
