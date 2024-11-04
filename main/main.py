@@ -1,4 +1,5 @@
 import random
+import time
 
 characters = {}
 
@@ -151,7 +152,7 @@ def fight(fighter1_name, fighter2_name):
     print(f"Empieza el combate entre {fighter1_name} y {fighter2_name}")
 
     while fighter1["hp"] > 0 and fighter2["hp"] > 0:
-        print(f"Turno de {fighter1_name}")
+        print(f"\nTurno de {fighter1_name}")
 
         if "equipment" not in fighter1:
             print(f"{fighter1_name} no tiene un arma equipada y no puede atacar, por lo tanto huye del combate.")
@@ -159,7 +160,7 @@ def fight(fighter1_name, fighter2_name):
         if "equipment" not in fighter2:
             print(f"{fighter2_name} no tiene un arma equipada y no puede atacar, por lo tanto huye del combate.")
             break
-
+        time.sleep(0.75)
         if attack(check_prob(fighter1["equipment"]["name"])):
             print(
                 f"El ataque ha acertado, {fighter1_name} ha causado {fighter1['equipment']['power']} puntos de daño.")
@@ -167,11 +168,17 @@ def fight(fighter1_name, fighter2_name):
         else:
             print(f"El ataque de {fighter1_name} ha fallado, mala suerte!")
 
+        time.sleep(1.5)
+
         if fighter2["hp"] <= 0:
             print(f"{fighter2_name} ha perdido este combate")
             break
 
-        print(f"Turno de {fighter2_name}")
+        time.sleep(1)
+
+        print(f"\nTurno de {fighter2_name}")
+
+        time.sleep(0.75)
 
         if attack(check_prob(fighter2["equipment"]["name"])):
             print(
@@ -180,10 +187,13 @@ def fight(fighter1_name, fighter2_name):
         else:
             print(f"El ataque de {fighter2_name} ha fallado, mala suerte!")
 
+        time.sleep(1.5)
+
         if fighter1["hp"] <= 0:
             print(f"{fighter1_name} ha perdido este combate")
             break
 
+        time.sleep(1.5)
 def healing_before_battle(fighter):
 
     """
