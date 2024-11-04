@@ -56,20 +56,23 @@ def add_relationship(name):
         print("Personaje no existe. Intente nuevamente.")
         return
 
-    relationship_type = str(input("Tipo de relación (Nombre a libre elección): ")).lower().capitalize()
+    try:
+        relationship_type = str(input("Tipo de relación (Nombre a libre elección): ")).lower().capitalize()
 
-    trust_level = int(input("Nivel de confianza (1-10): "))
+        trust_level = int(input("Nivel de confianza (1-10): "))
 
-    while trust_level < 1 or trust_level > 10:
-        trust_level = int(input("El nivel de confianza debe de estar entre 1 y 10: "))
+        while trust_level < 1 or trust_level > 10:
+            trust_level = int(input("El nivel de confianza debe de estar entre 1 y 10: "))
 
-    characters[name]["relationships"].append({
-        "character": related_name,
-        "type": relationship_type,
-        "trust_level": trust_level
-    })
+        characters[name]["relationships"].append({
+            "character": related_name,
+            "type": relationship_type,
+            "trust_level": trust_level
+        })
 
-    print(f"Relación añadida entre {name} y {related_name}")
+        print(f"Relación añadida entre {name} y {related_name}")
+    except ValueError:
+        print("Error: no se ha podido añadir a relación, debes introducir un valor numérico")
 
 def add_character():
     """
