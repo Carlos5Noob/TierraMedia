@@ -98,15 +98,15 @@ def add_weapon_to_character():
 
     weapon_name = input("Nombre del arma (Anduril Sword, Galadriel's Bow, Gimli's Axe, Frodo's Dagger, Saruman's Staff, One Ring, Boromir's Sword): ").strip()
     if weapon_name not in weapons:
-        print("El arma no existe.")
-        return
+        raise Exception("El arma no existe.")
+    else:
 
-    characters[name]["equipment"] = {
-        "name": weapon_name,
-        "type": weapon_types[weapon_name],
-        "power": weapon_powers[weapon_name]
-    }
-    print(f"Arma '{weapon_name}' asignada a {name}.")
+        characters[name]["equipment"] = {
+            "name": weapon_name,
+            "type": weapon_types[weapon_name],
+            "power": weapon_powers[weapon_name]
+        }
+        print(f"Arma '{weapon_name}' asignada a {name}.")
 
 def show_characters():
     """
@@ -360,8 +360,11 @@ def main():
                 print("Has elegido la opción añadir personaje.")
                 add_character()
             case 2:
-                print("Has elegido la opción añadir arma a un personaje.\n")
-                add_weapon_to_character()
+                try:
+                    print("Has elegido la opción añadir arma a un personaje.\n")
+                    add_weapon_to_character()
+                except Exception as e:
+                    print(e)
             case 3:
                 personaje = input(
                     "Introduce el nombre del personaje al que quieres añadir una nueva relación: ").lower().capitalize()
