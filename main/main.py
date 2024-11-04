@@ -82,12 +82,12 @@ def add_weapon_to_character():
     """
     Asigna un arma a un personaje existente en el sistema.
     """
-    name = input("Nombre del personaje: ").capitalize()
+    name = input("Nombre del personaje: ").lower().capitalize()
     if name not in characters:
         print("Personaje no existe.")
         return
 
-    weapon_name = input("Nombre del arma: ").strip()
+    weapon_name = input("Nombre del arma (Anduril Sword, Galadriel's Bow, Gimli's Axe, Frodo's Dagger, Saruman's Staff, One Ring, Boromir's Sword): ").strip()
     if weapon_name not in weapons:
         print("El arma no existe.")
         return
