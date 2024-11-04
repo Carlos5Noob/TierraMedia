@@ -194,6 +194,7 @@ def fight(fighter1_name, fighter2_name):
             break
 
         time.sleep(1.5)
+
 def healing_before_battle(fighter):
 
     """
@@ -245,7 +246,6 @@ def check_prob(weapon_name):
     if "ring" in weapon_name.lower():
         attack_chance = 70
     return attack_chance
-
 
 def show_characters_per_faction(faction):
 
@@ -314,7 +314,6 @@ def show_characters_per_equipment(equipment):
                 print(f"    - Tipo: {relacion['type']}")
                 print(f"    - Nivel de confianza: {relacion['trust_level']}")
 
-
 def show_menu():
     """
     Muestra el menú principal del juego.
@@ -331,6 +330,7 @@ def show_menu():
     9. Salir
     -------------------------------------------------
     Haga su eleccion \n""")
+
 def main():
     """
     Función principal del juego.
