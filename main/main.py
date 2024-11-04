@@ -23,34 +23,39 @@ weapon_powers = {weapons[0]: 100, weapons[1]: 60, weapons[2]: 80, weapons[3]: 70
 
 locations = ("Rivendell", "Shire", "Minas Tirith", "Mordor", "Isengard", "Mirkwood", "Lothlórien")
 
-def change_location(name):
+def change_location():
     """
     Cambia la ubicación de un personaje existente.
 
-    :param name: str, nombre del personaje
     """
-    character = characters.get(name.capitalize())
+    print("Has elegido la opción de modificar la localización de un personaje. ")
+    pj = input(f"Elige el personaje al cuál quiera cambiar su ubicación: ")
+    while pj not in characters:
+        pj = input(f"El personaje seleccionado no se encuentra en estas tierras, seleccione otro guerrero. ")
+    character = characters.get(pj.capitalize())
     if not character:
-        print(f"{name} no existe en el sistema.")
+        print(f"{pj} no existe en el sistema.")
         return
 
-    print(f"Ubicación actual de {name}: {character['location']}")
+    print(f"Ubicación actual de {pj}: {character['location']}")
     new_location = input("Nueva ubicación: ").capitalize()
     while new_location not in locations:
         new_location = input(f"{new_location} no es válido. Introduzca otra ubicación: ").capitalize()
 
     if new_location != character["location"]:
         character["location"] = new_location
-        print(f"{name} ha sido trasladado a {new_location}")
+        print(f"{pj} ha sido trasladado a {new_location}")
     else:
-        print(f"{name} ya se encuentra en {new_location}")
+        print(f"{pj} ya se encuentra en {new_location}")
 
-def add_relationship(name):
+def add_relationship():
     """
     Añade una relación entre dos personajes.
 
-    :param name: str, nombre del personaje al que se añadirá la relación
     """
+    personaje = input("Introduce el nombre del personaje al que quieres añadir una nueva relación: ").lower().capitalize()
+    while personaje not in available_characters:
+        personaje = input("Personaje no existe. Introduzca un personaje válido: ")
     related_name = input("Nombre del personaje con quien tendrá relación: ").capitalize()
     if related_name not in available_characters:
         print("Personaje no existe. Intente nuevamente.")
@@ -64,13 +69,13 @@ def add_relationship(name):
         while trust_level < 1 or trust_level > 10:
             trust_level = int(input("El nivel de confianza debe de estar entre 1 y 10: "))
 
-        characters[name]["relationships"].append({
+        characters[personaje]["relationships"].append({
             "character": related_name,
             "type": relationship_type,
             "trust_level": trust_level
         })
 
-        print(f"Relación añadida entre {name} y {related_name}")
+        print(f"Relación añadida entre {personaje} y {related_name}")
     except ValueError:
         print("Error: no se ha podido añadir a relación, debes introducir un valor numérico")
 
@@ -78,6 +83,7 @@ def add_character():
     """
     Añade un nuevo personaje al sistema con detalles predefinidos.
     """
+    print("Has elegido la opción añadir personaje.")
     name = input("Elija el nombre de un personaje de esta lista (Aragorn, Legolas, Gimli, Frodo, Boromir, Saruman, Galadriel, Sauron): ").lower().capitalize()
     if name not in available_characters:
         print("El nombre no es válido.")
@@ -91,6 +97,7 @@ def add_weapon_to_character():
     """
     Asigna un arma a un personaje existente en el sistema.
     """
+    print("Has elegido la opción añadir arma a un personaje.\n")
     name = input("Nombre del personaje: ").lower().capitalize()
     if name not in characters:
         print("Personaje no existe.")
@@ -112,6 +119,7 @@ def show_characters():
     """
     Muestra todos los personajes en el sistema.
     """
+    print("\nA continuación, se mostrarán todos los personajes existentes: \n")
     if not characters:
         print("No hay personajes en el sistema.")
         return
@@ -137,18 +145,19 @@ def show_characters():
             print(f"    - Tipo: {relation['type']}")
             print(f"    - Nivel de confianza: {relation['trust_level']}")
 
-def fight(fighter1_name, fighter2_name):
+def fight():
 
     """
     Inicia un combate entre dos personajes.
 
-    Args:
-        fighter1_name (str): Nombre del primer luchador.
-        fighter2_name (str): Nombre del segundo luchador.
     """
-
-    fighter1 = characters.get(fighter1_name.capitalize())
-    fighter2 = characters.get(fighter2_name.capitalize())
+    print("Has elegido la opción de combate entre dos personajes. ")
+    print("Aquí tienes una lista de todos los personajes: \n")
+    show_characters()
+    fighter1_name = input("Introduce el personaje 1: ").lower().capitalize()
+    fighter2_name = input("Introduce el personaje 2: ").lower().capitalize()
+    fighter1 = characters.get(fighter1_name.lower().capitalize())
+    fighter2 = characters.get(fighter2_name.lower().capitalize())
 
     if not fighter1 or not fighter2:
         print("Uno o ambos personajes no existen.")
@@ -255,15 +264,14 @@ def check_prob(weapon_name):
         attack_chance = 70
     return attack_chance
 
-def show_characters_per_faction(faction):
+def show_characters_per_faction():
 
     """
     Muestra los personajes que pertenecen a una facción específica.
 
-    Args:
-        faction (str): Nombre de la facción para filtrar los personajes.
     """
-
+    print("Has elegido mostrar personajes por facción.")
+    faction = input("Introduce la facción que quieras buscar: ")
     if not characters:
         print(f"No hay ningún personaje en el sistema.")
         return
@@ -290,15 +298,14 @@ def show_characters_per_faction(faction):
                 print(f"    - Tipo: {relacion['type']}")
                 print(f"    - Nivel de confianza: {relacion['trust_level']}")
 
-def show_characters_per_equipment(equipment):
+def show_characters_per_equipment():
 
     """
     Muestra los personajes que tienen un equipamiento específico.
 
-    Args:
-        equipment (str): Nombre del equipamiento para filtrar los personajes.
     """
-
+    print("Has elegido mostrar personajes por equipamiento.\n")
+    equipment = input("Introduce el equipamiento que quieras buscar: ")
     if not characters:
         print(f"No hay ningún personaje en el sistema.")
         return
@@ -357,44 +364,23 @@ def main():
 
         match opcion:
             case 1:
-                print("Has elegido la opción añadir personaje.")
                 add_character()
             case 2:
                 try:
-                    print("Has elegido la opción añadir arma a un personaje.\n")
                     add_weapon_to_character()
                 except Exception as e:
                     print(e)
             case 3:
-                personaje = input(
-                    "Introduce el nombre del personaje al que quieres añadir una nueva relación: ").lower().capitalize()
-                while personaje not in available_characters:
-                    personaje = input("Personaje no existe. Introduzca un personaje válido: ")
-                add_relationship(personaje)
+                add_relationship()
             case 4:
-                print("Has elegido la opción de modificar la localización de un personaje. ")
-                pj = input(f"Elige el personaje al cuál quiera cambiar su ubicación: ")
-                while pj not in characters:
-                    pj = input(
-                        f"El personaje seleccionado no se encuentra en estas tierras, seleccione otro guerrero. ")
-                change_location(pj)
+                change_location()
             case 5:
-                print("Has elegido la opción de combate entre dos personajes. ")
-                print("Aquí tienes una lista de todos los personajes: \n")
-                show_characters()
-                character1 = input("Introduce el personaje 1: ")
-                character2 = input("Introduce el personaje 2: ")
-                fight(character1, character2)
+                fight()
             case 6:
-                print("Has elegido mostrar personajes por facción.")
-                faction = input("Introduce la facción que quieras buscar: ")
-                show_characters_per_faction(faction)
+                show_characters_per_faction()
             case 7:
-                print("Has elegido mostrar personajes por equipamiento.\n")
-                equipment = input("Introduce el equipamiento que quieras buscar: ")
-                show_characters_per_equipment(equipment)
+                show_characters_per_equipment()
             case 8:
-                print("Has elegido la opción de mostrar todos los personajes: \n")
                 show_characters()
             case 9:
                 salir = False
