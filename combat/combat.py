@@ -1,5 +1,5 @@
-import time
-import random
+from time import time
+from random import random
 
 class Combat:
     def __init__(self):
