@@ -1,5 +1,10 @@
+add-feature-to-establish-relationship
+from relations import relations
+from character import Personaje
+from ubication import Ubication
 from character.Personaje import Personaje
 from Equipment import equipment
+main
 
 class TierraMedia:
 
@@ -7,6 +12,19 @@ class TierraMedia:
         self.personajes = personajes
         self.facciones = facciones
         self.characters = {}
+
+add-feature-to-establish-relationship
+    def añadir_relacion(self, nombre, relaciones, tipo_relacion, nivel_confianza):
+        nueva_relacion = relations.relations[nombre, tipo_relacion, nivel_confianza]
+        self.characters[nombre]["relacion"] = nueva_relacion
+
+        print(f"{nombre} relacionado con {nombre}, el tipo es {tipo_relacion} y su nivel de confianza es {nivel_confianza}")
+
+    def cambiar_ubicacion(self, nombre, ubicacion):
+        nueva_ubicacion = Ubication.Ubication[nombre, ubicacion]
+        self.characters[nombre]["tipo"] = nueva_ubicacion
+
+        print(f"{nombre} se ha desplazado a {ubicacion}")
 
     def registrar_personaje(self, nombre, raza, faccion, ubicacion, hp):
         nuevo_personaje = Personaje(nombre, raza, hp, faccion, ubicacion)
@@ -27,3 +45,4 @@ class TierraMedia:
                 print(f"Arma {equipamiento} equipada al personaje {nombre_personaje}")
             else:
                 raise Exception("El equipamiento no es de la clase Equipamiento. ")
+main

@@ -1,4 +1,4 @@
-from Personajes import Personaje
+from character import Personaje
 
 class Relations:
     def __init__(self, Personaje, tipo_relacion, nivel_confianza ):
