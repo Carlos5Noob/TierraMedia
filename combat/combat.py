@@ -1,118 +1,91 @@
-from time import time
-from random import random
+from time import sleep
+from random import randint, random
 
 class Combat:
     def __init__(self):
-        def fight(ft1, ft2):
-            """
-            Inicia un combate entre dos personajes.
-            """
-            print("Has elegido la opción de combate entre dos personajes. ")
-            print("Aquí tienes una lista de todos los personajes: \n")
+        pass
 
-            if not ft1 or not ft2:
-                print("Uno o ambos personajes no existen.")
-                return
+    def fight(self, ft1, ft2):
+        """
+        Inicia un combate entre dos personajes.
+        """
+        print("Has elegido la opción de combate entre dos personajes.")
+        print("Aquí tienes una lista de todos los personajes:\n")
 
-            healing_before_battle(ft1)
-            healing_before_battle(ft2)
+        if not ft1 or not ft2:
+            print("Uno o ambos personajes no existen.")
+            return
 
-            print(f"Empieza el combate entre {ft1.nombre} y {ft2.nombre}")
+        self.healing_before_battle(ft1)
+        self.healing_before_battle(ft2)
 
-            while ft1.hp > 0 and ft2.hp > 0:
-                print(f"\nTurno de {ft1.nombre}")
+        print(f"Empieza el combate entre {ft1['nombre']} y {ft2['nombre']}")
 
-                if "equipment" not in ft1:
-                    print(
-                        f"{ft1.nombre} no tiene un arma equipada y no puede atacar, por lo tanto huye del combate.")
-                    break
-                if "equipment" not in ft2.nombre:
-                    print(
-                        f"{ft2.nombre} no tiene un arma equipada y no puede atacar, por lo tanto huye del combate.")
-                    break
-                time.sleep(0.75)
-                if attack(check_prob(ft1.equipamiento["nombre"])):
-                    print(
-                        f"El ataque ha acertado, {ft1.nombre} ha causado {ft1.equipamiento["daño"]} puntos de daño.")
-                    ft2.hp -= ft1.equipamiento["daño"]
-                else:
-                    print(f"El ataque de {ft1.nombre} ha fallado, mala suerte!")
+        while ft1["hp"] > 0 and ft2["hp"] > 0:
+            print(f"\nTurno de {ft1['nombre']}")
 
-                time.sleep(1.5)
+            if "equipamiento" not in ft1:
+                print(f"{ft1['nombre']} no tiene un arma equipada y huye del combate.")
+                break
 
-                if ft2.hp <= 0:
-                    print(f"{ft2.nombre} ha perdido este combate")
-                    break
+            if "equipamiento" not in ft2:
+                print(f"{ft2['nombre']} no tiene un arma equipada y huye del combate.")
+                break
 
-                time.sleep(1)
+            sleep(0.75)
 
-                print(f"\nTurno de {ft2.nombre}")
+            if self.attack(self.check_prob(ft1["equipamiento"]["nombre"])):
+                print(f"El ataque ha acertado, {ft1['nombre']} ha causado {ft1['equipamiento']['daño']} puntos de daño.")
+                ft2["hp"] -= ft1["equipamiento"]["daño"]
+            else:
+                print(f"El ataque de {ft1['nombre']} ha fallado.")
 
-                time.sleep(0.75)
+            sleep(1.5)
 
-                if attack(check_prob(ft2.equipamiento["nombre"])):
-                    print(
-                        f"El ataque ha acertado, {ft2.nombre} ha causado {ft2.equipamiento["daño"]} puntos de daño.")
-                    ft1.hp -= ft2.equipamiento["daño"]
-                else:
-                    print(f"El ataque de {ft2.nombre} ha fallado, mala suerte!")
+            if ft2["hp"] <= 0:
+                print(f"{ft2['nombre']} ha perdido este combate.")
+                break
 
-                time.sleep(1.5)
+            sleep(1)
 
-                if ft1.hp <= 0:
-                    print(f"{ft1.nombre} ha perdido este combate")
-                    break
+            print(f"\nTurno de {ft2['nombre']}")
+            sleep(0.75)
 
-                time.sleep(1.5)
+            if self.attack(self.check_prob(ft2["equipamiento"]["nombre"])):
+                print(f"El ataque ha acertado, {ft2['nombre']} ha causado {ft2['equipamiento']['daño']} puntos de daño.")
+                ft1["hp"] -= ft2["equipamiento"]["daño"]
+            else:
+                print(f"El ataque de {ft2['nombre']} ha fallado.")
 
-        def healing_before_battle(fighter):
+            sleep(1.5)
 
-            """
-            Restaura los puntos de salud del luchador a 300 antes de la batalla.
+            if ft1["hp"] <= 0:
+                print(f"{ft1['nombre']} ha perdido este combate.")
+                break
 
-            Args:
-                fighter (dict): Diccionario que contiene la información del luchador.
-            """
+            sleep(1.5)
 
-            fighter["hp"] = 300
+    def healing_before_battle(self, fighter):
+        """Restaura los puntos de salud del luchador a 300 antes de la batalla."""
+        fighter["hp"] = 300
 
-        def attack(chance):
+    def attack(self, chance):
+        """Determina si un ataque tiene éxito basado en la probabilidad dada."""
+        return chance >= randint(1, 100)
 
-            """
-            Determina si un ataque tiene éxito basado en la probabilidad dada.
-
-            Args:
-                chance (int): Porcentaje de probabilidad de que el ataque tenga éxito.
-
-            Returns:
-                bool: True si el ataque tiene éxito, False en caso contrario.
-            """
-
-            return chance >= random.randint(1, 100)
-
-        def check_prob(weapon_name):
-
-            """
-            Devuelve la probabilidad de éxito del ataque según el tipo de arma equipada.
-
-            Args:
-                weapon_name (str): Nombre del arma equipada.
-
-            Returns:
-                int: Probabilidad de éxito del ataque.
-            """
-
-            attack_chance = 0
-            if "sword" in weapon_name.lower():
-                attack_chance = 50
-            if "dagger" in weapon_name.lower():
-                attack_chance = 40
-            if "axe" in weapon_name.lower():
-                attack_chance = 45
-            if "bow" in weapon_name.lower():
-                attack_chance = 65
-            if "staff" in weapon_name.lower():
-                attack_chance = 60
-            if "ring" in weapon_name.lower():
-                attack_chance = 70
-            return attack_chance
+    def check_prob(self, weapon_name):
+        """Devuelve la probabilidad de éxito del ataque según el tipo de arma equipada."""
+        attack_chance = 0
+        if "sword" in weapon_name.lower():
+            attack_chance = 50
+        elif "dagger" in weapon_name.lower():
+            attack_chance = 40
+        elif "axe" in weapon_name.lower():
+            attack_chance = 45
+        elif "bow" in weapon_name.lower():
+            attack_chance = 65
+        elif "staff" in weapon_name.lower():
+            attack_chance = 60
+        elif "ring" in weapon_name.lower():
+            attack_chance = 70
+        return attack_chance
