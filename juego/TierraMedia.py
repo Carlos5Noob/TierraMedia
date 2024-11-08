@@ -1,10 +1,9 @@
-add-feature-to-establish-relationship
 from relations import relations
 from character import Personaje
 from ubication import Ubication
 from character.Personaje import Personaje
 from Equipment import equipment
-main
+
 
 class TierraMedia:
 
@@ -13,7 +12,6 @@ class TierraMedia:
         self.facciones = facciones
         self.characters = {}
 
-add-feature-to-establish-relationship
     def añadir_relacion(self, nombre, relaciones, tipo_relacion, nivel_confianza):
         nueva_relacion = relations.relations[nombre, tipo_relacion, nivel_confianza]
         self.characters[nombre]["relacion"] = nueva_relacion
@@ -45,4 +43,4 @@ add-feature-to-establish-relationship
                 print(f"Arma {equipamiento} equipada al personaje {nombre_personaje}")
             else:
                 raise Exception("El equipamiento no es de la clase Equipamiento. ")
-main
+
