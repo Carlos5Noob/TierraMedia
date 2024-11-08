@@ -1,87 +1,91 @@
+from Equipment import equipment
+from Equipment.equipment import Equipment
+from ubication import Ubication
+
 class Personaje():
     def __init__(self, nombre, raza, faccion, ubicacion, hp, equipamiento=None, relaciones=None):
-        self.nombre = nombre
-        self.raza = raza
-        self.faccion = faccion
-        self.ubicacion = ubicacion
-        self.equipamiento = equipamiento
-        self.relaciones = relaciones if not None else []
-        self.hp = hp
+        self._nombre = nombre
+        self._raza = raza
+        self._faccion = faccion
+        self._ubicacion = ubicacion
+        self._equipamiento = equipamiento
+        self._relaciones = relaciones if not None else []
+        self._hp = hp
 
     @property
     def nombre(self):
-        return self.nombre
+        return self._nombre
 
     @nombre.setter
     def nombre(self, nombre):
         if  isinstance(nombre, str):
-            self.nombre = nombre
+            self._nombre = nombre
         else:
             raise ValueError("El nombre debe ser una cadena de caracteres. ")
 
     @property
     def raza(self):
-        return self.raza
+        return self._raza
 
     @raza.setter
     def raza(self, raza):
         if isinstance(raza, str):
-            self.raza = raza
+            self._raza = raza
         else:
             raise ValueError("La raza debe ser una cadena de caracteres. ")
 
     @property
     def faccion(self):
-        return self.faccion
+        return self._faccion
 
     @faccion.setter
     def faccion(self, faccion):
         if isinstance(faccion, str):
-            self.faccion = faccion
+            self._faccion = faccion
         else:
             raise ValueError("La facción debe ser una cadena de caracteres. ")
 
     @property
     def ubicacion(self):
-        return self.ubicacion
+        return self._ubicacion
 
     @ubicacion.setter
     def ubicacion(self, ubicacion):
         if isinstance(ubicacion, str):
-            self.ubicacion = ubicacion
+            self._ubicacion = ubicacion
         else:
             raise ValueError("La ubicación debe ser una cadena de caracteres. ")
 
     @property
     def equipamiento(self):
-        return self.equipamiento
+        return self._equipamiento
 
     @equipamiento.setter
     def equipamiento(self, equipamiento):
         if isinstance(equipamiento, str):
-            self.equipamiento = equipamiento
+            self._equipamiento = equipamiento
         else:
             raise ValueError("El equipamiento debe ser una cadena de caracteres. ")
 
     @property
     def hp(self):
-        return self.hp
+        return self._hp
 
     @hp.setter
     def hp(self, hp):
         if isinstance(hp, int):
-            self.hp = hp
+            self._hp = hp
         else:
             raise ValueError("La salud del personaje (hp) ha de ser un número entero. ")
 
     @property
     def relaciones(self):
-        return self.relaciones
+        return self._relaciones
 
     @relaciones.setter
     def relaciones(self, relaciones):
         if isinstance(relaciones, list):
-            self.relaciones = relaciones
+            self._relaciones = relaciones
         else:
             raise ValueError("Las relaciones han de ser una lista. ")
 
