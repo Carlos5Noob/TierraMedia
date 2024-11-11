@@ -390,9 +390,9 @@ class TierraMedia:
         :param ubicacion:
         :return:
         """
-         if personaje not in self.personajes:
+        if personaje not in self.personajes:
             raise Exception("El personaje no está en la lista de personajes. ")
-         else:
+        else:
              personaje.ubicacion = ubicacion
              print("Ubicación añadida. ")
 
