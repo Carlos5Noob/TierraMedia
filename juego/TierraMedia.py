@@ -336,6 +336,7 @@ class TierraMedia:
         else: 
             print("Lista de personajes en TierraMedia:")
 
+
             for personaje in self.personajes:
                 print(f"\nNombre: {personaje.nombre}")
                 print(f"Raza: {personaje.raza}")
