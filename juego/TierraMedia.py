@@ -9,7 +9,19 @@ from time import sleep
 from random import randint
 
 class Personaje():
+
+
     def __init__(self, nombre, raza, faccion, ubicacion, hp, equipamiento=None, relaciones=None):
+        """
+        Método constructor de la clase Personaje
+        :param nombre: nombre del personaje
+        :param raza: raza del personaje
+        :param faccion: faccion del personaje
+        :param ubicacion: ubicacion del personaje
+        :param hp: salud total del personaje
+        :param equipamiento: equipamiento del personaje
+        :param relaciones: relaciones del personaje
+        """
         self._nombre = nombre
         self._raza = raza
         self._faccion = faccion
@@ -18,6 +30,8 @@ class Personaje():
         self._relaciones = relaciones if not None else []
         self._hp = hp
 
+
+    # GETTERS AND SETTERS
     @property
     def nombre(self):
         return self._nombre
@@ -96,24 +110,45 @@ class Personaje():
             raise ValueError("Las relaciones han de ser una lista. ")
 
     def añadir_equipamiento(self, equipamiento):
+        """
+        Función para añadir un arma a un personaje
+        :param equipamiento: arma de lc clase Equipment
+        :return:
+        """
         if isinstance(equipamiento, Equipment):
             self.equipamiento = equipamiento
         else:
             raise ValueError("El equipamiento debe ser de la clase Equipment.")
 
     def establecer_relacion(self, personaje, tipo_relacion, nivel_confianza):
+        """
+        Función que establece una nueva relación con un personaje
+        :param personaje: personaje de la clase Personaje
+        :param tipo_relacion: tipo de relación
+        :param nivel_confianza: nivel de confianza de la relacion
+        :return:
+        """
         if isinstance(personaje, Personaje):
             self._relaciones.append(Relations(personaje, tipo_relacion, nivel_confianza))
         else:
             raise ValueError("El objeto personaje debe ser una instancia de la clase Personaje.")
 
     def mover(self, nueva_ubicacion):
+        """
+        Método para mover de una ubicación a un personaje
+        :param nueva_ubicacion: nueva ubicación para el personaje
+        :return:
+        """
         if isinstance(nueva_ubicacion, Ubication):
             self.ubicacion = nueva_ubicacion
         else:
             raise ValueError("La ubicación debe ser de la clase Ubication.")
 
     def obtener_potencia_armma(self):
+        """
+        Método que devuelve la potencia del arma equipada del personaje
+        :return:
+        """
         if self.equipamiento == None:
             print(f"El personaje {self.nombre} no tiene ningún arma equipada. ")
         else:
@@ -121,13 +156,23 @@ class Personaje():
 
 
 class Combat:
+
     def __init__(self):
+        """
+        Método constructor de la clase Combat
+        """
         pass
 
     def fight(self, ft1, ft2):
+        """
+        Función que simula un combate entre dos personajes de la clase Personaje
+        :param ft1: personaje 1 de la clase Personaje
+        :param ft2: personaje 2 de la clase Personaje
+        :return:
+        """
 
         print(f"Empieza el combate entre {ft1.nombre} y {ft2.nombre}: ")
- 
+
         self.healing_before_battle(ft1)
         self.healing_before_battle(ft2)
 
@@ -198,10 +243,17 @@ class Combat:
 class Equipment():
 
     def __init__(self, equipment_name, equipment_type, equipment_power):
+        """
+        Método constructor de la clase Equipment
+        :param equipment_name: nombre del arma
+        :param equipment_type: tipo del arma
+        :param equipment_power: potencia del arma
+        """
         self._equipment_name = equipment_name
         self._equipment_type = equipment_type
         self._equipment_power = equipment_power
 
+    # GETTERS AND SETTERS
     @property
     def equipment_name(self):
         return self._equipment_name
@@ -236,19 +288,31 @@ class Equipment():
             raise ValueError('El poder del arma debe ser una cadena numérica: ')
 
     def is_a_weapon(self, equipment_type):
+        """
+        Método que verifica si un arma es de la clase Equipment
+        :param equipment_type: arma
+        :return:
+        """
         if isinstance(equipment_type, Equipment):
             return True
         else:
             return False
-        
+
 
 
 class Relations:
     def __init__(self, Personaje, tipo_relacion, nivel_confianza ):
+        """
+        Método constructor de la clase Relations
+        :param Personaje: personaje de la clase Personaje
+        :param tipo_relacion: tipo relacion
+        :param nivel_confianza: nivel confianza
+        """
         self._Personaje=Personaje
         self._tipo_relacion=tipo_relacion
         self._nivel_confianza=nivel_confianza
 
+    # GETTERS AND SETTERS
     @property
     def Personaje(self):
         return self._Personaje
@@ -281,6 +345,10 @@ class Relations:
 
 class Ubication:
     def __init__(self, tipo):
+        """
+        Método constructor
+        :param tipo: tipo ubicacion
+        """
         self._tipo = tipo
 
     @property
@@ -295,23 +363,46 @@ class Ubication:
 class TierraMedia:
 
     def __init__(self, personajes, facciones):
+        """
+        Método constructor de la clase TierraMedia
+        :param personajes: lista donde se almacenan los personajes de la clase Personaje
+        :param facciones: lista de facciones
+        """
         self.personajes = personajes
         self.facciones = facciones
 
     def añadir_relacion(self, personaje, relacion):
+        """
+        Método que añade una nueva relacion a un personaje de la lista
+        :param personaje:
+        :param relacion:
+        :return:
+        """
         if personaje not in self.personajes:
             raise Exception("El personaje no está en la lista de personajes. ")
         else:
             pass
 
     def cambiar_ubicacion(self, personaje, ubicacion):
-         if personaje not in self.personajes:
+        """
+        Método que cambia la ubicación a un personaje
+        :param personaje:
+        :param ubicacion:
+        :return:
+        """
+        if personaje not in self.personajes:
             raise Exception("El personaje no está en la lista de personajes. ")
-         else:
+        else:
              personaje.ubicacion = ubicacion
              print("Ubicación añadida. ")
 
     def registrar_personaje(self, personaje):
+        """
+        Función que registrar un nuevo personaje a la lista de personajes
+        :param self:
+        :param personaje:
+        :return:
+        """
         if isinstance(personaje, Personaje):
             self.personajes.append(personaje)
             print(f"Personaje {personaje.nombre} añadido. ")
@@ -319,6 +410,13 @@ class TierraMedia:
             raise Exception("El personaje debe ser de la clase Personaje. ")
 
     def añadir_equipamiento(self, personaje, equipamiento):
+        """
+        Función que añade un equipamiento a un personaje almacenado en la lista
+        :param self:
+        :param personaje:
+        :param equipamiento:
+        :return:
+        """
         if personaje not in self.personajes:
             raise Exception("El personaje no está en la lista de personajes. ")
         else:
@@ -327,15 +425,19 @@ class TierraMedia:
                 print(f"Arma equipada al personaje {personaje.nombre}.")
             else:
                 raise Exception("El equipamiento no es de la clase Equipamiento. ")
-    
+
     def listar_personajes(self):
+        """
+        Método para listar todos los personajes de la lista
+        :param self:
+        :return:
+        """
         if not self.personajes:
             print("No hay personajes en la lista. ")
             return
-        
-        else: 
-            print("Lista de personajes en TierraMedia:")
 
+        else:
+            print("Lista de personajes en TierraMedia:")
 
             for personaje in self.personajes:
                 print(f"\nNombre: {personaje.nombre}")
@@ -353,18 +455,29 @@ class TierraMedia:
                         print(f"  - {relacion.personaje.nombre}, Tipo: {relacion.tipo_relacion}, Nivel de Confianza: {relacion.nivel_confianza}")
                 else:
                     print("Relaciones: Ninguna")
-    
+
     def combate(self, fighter1, figther2):
+        """
+        Método que simula un combate entre dos personajes de la clase Personaje
+        :param self:
+        :param fighter1:
+        :param figther2:
+        :return:
+        """
 
         if fighter1 not in self.personajes or figther2 not in self.personajes:
             raise Exception("Uno o ambos personajes no están registrados en TierraMedia.")
-        
-        else:       
+
+        else:
             combat = Combat()
             combat.fight(fighter1, figther2)
 
 
 def main():
+    """
+    Método main que es el que se ejecuta
+    :return:
+    """
     tierra_media = TierraMedia([], [])
 
     try:
